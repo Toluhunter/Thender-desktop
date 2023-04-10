@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- <link rel="stylesheet" href="../../static/css/style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
+</head>
+<body>
+    <section class="w-1/4 container mx-auto" >
+        <div class="flex items-center flex-col" >
+            <img src="../../static/Icon/Logo.svg" class="mb-10 mt-40">
+
+            <div class="border rounded py-10 px-20 shadow-md">
+                <h1 class="font-bold text-4xl mb-8 w-7xl text-center">Welcome back!</h1>
+
+                <form>
+                    <!--User name-->
+                <div class="mb-6">
+                    <label class="text-gray-500 font-bold text-xl block" for="username">
+                        Username
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        class="p-4 w-96 text-gray-500 font-bold border border-gray-300 rounded mt-2 focus:border-blue-600 hover:border-blue-500 outline-none"
+                    />
+                </div>
+
+                 <!--Password-->
+                 <div class="mb-6">
+                    <label class="text-gray-500 font-bold text-xl block" for="password">
+                        Password
+                    </label>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        class="p-4 w-96 text-gray-500 font-bold border border-gray-300 rounded mt-2 focus:border-blue-600 hover:border-blue-500 outline-none"
+                    />
+                </div>
+
+                <p class="text-gray-500 text-lg mb-4">Don't have an account? 
+                    <a href="#" class="font-bold text-blue-600 underline"> Register</a> or use
+                    <a href="#" class="font-bold text-blue-600 underline"> offline mode</a>
+                </p>
+
+                <!--Button-->
+                <button type="submit" class="text-white font-bold text-lg rounded w-full p-4" style="background-color: #0011FF">
+                        Login
+                </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
