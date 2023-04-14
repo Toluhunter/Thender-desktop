@@ -28,10 +28,10 @@
         };
       </script>
 </head>
-<body>
+<body class="">
     <section class="flex h-screen">
         <!-- Side Nav -->
-        <div class="min-h-full flex flex-col justify-between lg:w-1/6  bg-sideNav ">
+        <div class="min-h-full flex flex-col justify-between w-1/6  bg-sideNav ">
             <div>
               <div class="flex justify-center items-center space-x-4">
                 <img src="../../static/Icon/Logo.svg" class="h-16 w-16 mb-10 my-6">
@@ -137,7 +137,7 @@
                     <div class="">
                         <h1 class="font-extrabold text-3xl px-10 pt-10">Online friends</h1>
 
-                        <div class="p-10 grid grid-cols-6 gap-8 ">
+                        <div class="p-10 lg:grid grid-cols-6 gap-8 space-y-4">
                             <!--Online Friends Listing-->
                             <form class="shadow-md rounded-lg flex flex-col items-center space-y-4 p-4 bg-white">
                                 <div class="relative ">
@@ -153,14 +153,17 @@
                                 </button>
 
                             </form>
+                          
 
                         </div>
+
+                       
 
 
                         <div class="">
                             <h1 class="font-extrabold text-3xl px-10 pt-10">Offline friends</h1>
                             <!--Offline Friends Listing-->
-                            <div class="p-10 grid grid-cols-6 gap-8 ">
+                            <div class="p-10 lg:grid grid-cols-6 gap-8 space-y-4">
                                 <form class="shadow-md rounded-lg flex flex-col items-center space-y-4 p-4 bg-white">
                                     <div class="relative ">
                                         <img class="w-28 h-28 rounded-full" src="../../static/img/avatar.svg" alt="">
@@ -176,22 +179,7 @@
     
                                 </form>
     
-                                <div class="shadow-md rounded-lg flex flex-col items-center space-y-4 p-4 bg-white">
-                                    <div class="relative ">
-                                        <img class="w-28 h-28 rounded-full" src="../../static/img/avatar.svg" alt="">
-                                        <span class="top-0 right-5 absolute  w-5 h-5 bg-gray-400 border-2 border-white rounded-full"></span>
-                                    </div>
-    
-                                    <p class="font-bold">Cynthia2002</p>
-    
-                                    <button class="flex space-x-4 items-center bg-indigo-400 p-4 text-white rounded-lg">
-                                        <img src="../../static/Icon/white_download.png" class="w-5 h-5" alt="Download icon" />
-                                        <p class="font-bold"> Send file</p>
-                                    </button>
-    
-                                </div>
-    
-    
+                              
                             </div>
 
                     </div>
