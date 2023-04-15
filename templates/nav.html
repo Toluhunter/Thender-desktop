@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            sans: ["Inter"],
+          },
+          extend: {
+            colors: {
+              primary: "#0011FF",
+              sideNav: "#00032D",
+              danger: "#FF1D1D",
+              active: "#2BFF00",
+              progress: "#EBDA00",
+              secondary: "#2377F3"
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-zinc-50">
+
+
+<div class="flex">
+        <!--Side Nav-->
+        <aside class="fixed top-0 left-0 z-40 w-64 h-screen pt-6 transition-transform -translate-x-full bg-sideNav border-r border-gray-200 sm:translate-x-0 " aria-label="Sidebar">
+            <div class="h-full pb-4 overflow-y-auto bg-sideNav">
+               <div class="flex justify-center items-center text-white">
+                   <img src="../../static/Icon/Logo.svg" class="h-8 mr-3" alt="Thender Logo" />
+                   <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap font-extrabold">THender</span>
+                 </div>
+               <ul class="space-y-2 py-4 font-medium text-white">
+                  <li>
+       
+                       <p class="mb-2 mx-4 font-bold">
+                           Transfer
+                       </p>
+                       <a href="#" class="flex space-x-4 items-center text-lg mb-8 hover:bg-indigo-500">
+                           <img src="../../static/Icon/dash_online.png" class="ml-4 py-2">
+                           <p>Online</p>
+                       </a>
+       
+                       <a href="#" class="flex space-x-4 items-center text-lg mb-8 hover:bg-indigo-500">
+                           <img src="../../static/Icon/dash_online.png" class="ml-4 py-2">
+                           <p>Offline</p>
+                       </a>
+                  </li>
+                  
+                  <li>
+       
+                       <p class="mb-2 mx-4 font-bold">
+                           Requests
+                       </p>
+                       <a href="#" class="flex space-x-4 items-center text-lg mb-8 hover:bg-indigo-500">
+                           <img src="../../static/Icon/friends.png" class="ml-4 py-2">
+                           <p>Friend</p>
+                       </a>
+                     <a href="#" class="flex space-x-4 items-center text-lg mb-8 hover:bg-indigo-500">
+                       <img src="../../static/Icon/dash_online.png" class="ml-4 py-2">
+                       <span class="flex ml-3 whitespace-nowrap">Transfer</span>
+                       <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-white bg-danger rounded-full">
+                           3
+                       </span>
+                     </a>
+                  </li>
+       
+                  <li>
+       
+                       <p class="mb-2 mx-4 font-bold">
+                           Transfer Progress
+                       </p>
+                       
+                       <a href="#" class="flex space-x-4 items-center text-lg mb-8 hover:bg-indigo-500">
+                           <img src="../../static/Icon/dash_online.png" class="ml-4 py-2">
+                           <span class="flex ml-3 whitespace-nowrap">Active</span>
+                           <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-white bg-green-600 rounded-full">
+                               1
+                           </span>
+                       </a>
+              </li>
+                  
+                  
+               </ul>
+
+               <form method=" " action=" "
+                    class="fixed bottom-0 mt-0 py-4 pl-2 lg:pr-36 flex space-x-4 items-center w-full" style="background-color: #FF1D1D">
+                    <img src="../../static/Icon/logout.png" class="w-6 h-5 ml-4">
+                    <button class="text-white text-lg pr-0.5" type="submit">
+                        Logout
+                    </button>
+                </form>
+            </div>
+            
+
+        </aside>
+        <!--End Side Nav-->
+
+        <!--Main View-->
+        <div>
+            <!--Top Nav-->
+            <nav class="z-50 w-screen bg-white border-b border-gray-200 shadow-md">
+                <div class="px-3 py-3 lg:px-5 lg:pl-3 ">
+                    <div class="flex items-center justify-between">
+                        
+                        <form class="container mx-64 lg:mx-auto w-1/2">   
+                            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                </div>
+                                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm font-bold text-gray-900 border shadow-sm rounded-lg bg-gray-50 outline-none focus:ring-blue-500 focus:border-blue-500"
+                                     placeholder="Search for user">
+                                <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:border-blue-600 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                            </div>
+                        </form>
+                        
+                        <div class="flex items-center ml-3">
+                            <div class="relative">             
+                                <img class="w-8 h-8 rounded-full" src="../../static/img/avatar.svg" alt="user photo">
+                                <span class="-top-1 left-5 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!--End Top Nav-->
+            
+            <!--Main Body-->
+            <div class="p-4 sm:ml-64">
+                <section class="container mx-auto">
+                    
+                </section>
+                
+            </div>
+            <!--End Main Body-->
+        </div>
+        <!--End Main View-->
+
+
+</div>
+  
+  
+
+ 
+  
+</body>
+</html>
