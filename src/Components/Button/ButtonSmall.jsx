@@ -1,6 +1,6 @@
 import React from "react";
 
-function ButtonSmall({text, variant="primary"}) {
+function ButtonSmall({text, variant="primary", onClick = null, children=null, disabled=false}) {
     let buttonClass = "";
     switch (variant) {
         case "primary":
@@ -24,9 +24,14 @@ function ButtonSmall({text, variant="primary"}) {
     }
     return (
         <>
-            <button type="button" className={`py-2.5 px-6 bg-danger text-white font-semibold drop-shadow-md rounded 
-                                                active:drop-shadow-none ${buttonClass}`}>
-                {text}
+            <button type="button" onClick={onClick} disabled={disabled}
+                className={`py-2.5 px-6 bg-danger text-white font-semibold drop-shadow-md rounded 
+                                                active:drop-shadow-none ${buttonClass} ${disabled ? "opacity-40" : ""}`}>
+                {!children ? (
+                    text
+                ): (
+                    children
+                )}
             </button>
         </>
     )

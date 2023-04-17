@@ -2,7 +2,7 @@ import React from "react";
 
 function TransferRequest({image, username, fileName, fileSize, type="offline"}) {
     return (
-        <div className="bg-white py-8 px-8 text-lg shadow-md flex justify-between rounded-md relative">
+        <div className="bg-white py-8 px-8 text-lg shadow-md flex justify-between rounded-md relative flex-col lg:flex-row">
             {
                 type === "online" ? (
                     <span className="text-purple-500 bg-white border border-purple-500 px-4 py-1 rounded-md absolute -top-4 right-0">
@@ -27,7 +27,7 @@ function TransferRequest({image, username, fileName, fileSize, type="offline"}) 
                 </div>
             </div>
 
-            <div className="flex self-center justify-end space-x-4">
+            <div className="flex self-center justify-end space-x-4 mt-6 lg:mt-0">
                 <button type="button" className="py-2.5 px-6 bg-gray-500 text-white font-semibold drop-shadow-md rounded hover:bg-gray-400 active:drop-shadow-none">
                     Decline
                 </button>

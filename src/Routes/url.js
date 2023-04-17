@@ -21,7 +21,8 @@ const PATHS = {
     retrievePeers: "/peer/all/",
 
     // Search
-    searchUsers: "/search/p=1&s=25&?q=",
+    searchUsers: "/search/?q=",
+    searchEnd: "&p=1&s=25",
 
     // Transmisson
     addTransmission: "/transmission/add/",

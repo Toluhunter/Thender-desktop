@@ -36,9 +36,9 @@ function AuthProvider({children}) {
                             };
                             try { // refresh access token
                                 const detail = await postDataRef.current(data, PATHS.refreshToken);
-                                setAccessToken(detail.data.access); // Setting access token
-                                setLoggedIn(() => true); // Log user in
+                                const accessToken = detail.data.access;
                                 setTokens(accessToken, refreshToken); // Set tokens
+                                setLoggedIn(() => true); // Log user in
                             } catch(error) {
                                 baseLogout(); // Logout user
                             }
@@ -57,8 +57,11 @@ function AuthProvider({children}) {
     }, [accessToken]);
 
     function setTokens(accessToken, refreshToken) {
+        /** Sets access and refresh tokens */
         setAccessToken(() => accessToken);
         setRefreshToken(() => refreshToken);
+        localStorage.setItem("access_token", accessToken);
+        localStorage.setItem("refresh_token", refreshToken);
     }
 
     function baseLogout() {

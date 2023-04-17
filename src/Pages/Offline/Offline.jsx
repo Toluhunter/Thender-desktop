@@ -88,7 +88,7 @@ function OfflineTransfer() {
                   className="bg-danger text-lg font-semibold text-white px-6 py-4 rounded-md hover:bg-red-600 drop-shadow-md focus:bg-red-600 active:drop-shadow-none">Disconnect</button>
               </div>
               <form action="#" className="w-full lg:w-1/2">
-                <label for="file" className="block cursor-pointer">
+                <label htmlFfor="file" className="block cursor-pointer">
                     <div className="bg-zinc-100 p-4 shadow-md">
                         <div className="flex flex-col items-center justify-center px-10 py-24 space-y-5
                               border-2 border-dashed border-zinc-500">
