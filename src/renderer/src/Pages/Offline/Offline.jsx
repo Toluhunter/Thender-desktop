@@ -143,7 +143,8 @@ async function handleFileDialog() {
 function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userType = "send", server }) {
   /** Component that shows after a connection has been established */
   const [guestHost, setGuestHost] = useState(null);
-  server.on('data', (data) => setGuestHost(() => data.toString()))
+  server.on('data', (data) => setGuestHost(() => data.toString()));
+  const [progressCount, setProgressCount] = useState("0px");
 
   const handleSend = async () => {
     let filename = await handleFileDialog();
@@ -156,11 +157,29 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
     console.log(socket)
     socket.write(filename);
     await sleep(800)
+    let total = api.statSync(filename).size.toString()
+    let percent = 0
+    let dataSent = 0
+    socket.write(total)
+    await sleep(800)
 
-    const file = api.createReadStream(filename);
+    const file = api.createReadStream(filename, {
+      highWaterMark: 1024 * 1024,
+    });
 
     // send the file to the client
-    file.pipe(socket);
+    
+    file.on('data', (data) => { 
+      socket.write(data);
+      dataSent += (1024 * 1024);
+      let calculated = (dataSent / total) * 100;
+      percent = calculated <= 100 ? calculated : 100;
+      console.log(percent);
+      setProgressCount(() => {
+        console.log(`${percent}px`);
+        return `${percent}px`;
+      }); // Set progress bar
+  })
     handleStatus("sending");
   }
   return (
@@ -213,8 +232,8 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
               </div>
 
               <div className="w-full mt-3 h-3 overflow-hidden rounded-full">
-                <div class="h-3 w-full bg-neutral-400">
-                  <div class="h-3 bg-primary" style={{ width: "45%" }}></div>
+                <div className="h-3 w-full bg-neutral-400">
+                  <div className="h-3 bg-primary" style={{ width: `${progressCount}px` }}></div>
                 </div>
               </div>
               {userType === "send" && (

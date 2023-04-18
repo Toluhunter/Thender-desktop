@@ -12,7 +12,8 @@ const api = {
   hostname: () => os.hostname(),
   fileDialog: () => ipcRenderer.invoke('dialog:open'),
   createServer: () => net.createServer(),
-  createReadStream: (path) => fs.createReadStream(path)
+  createReadStream: (path) => fs.createReadStream(path),
+  statSync: (path) => fs.statSync(path)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
