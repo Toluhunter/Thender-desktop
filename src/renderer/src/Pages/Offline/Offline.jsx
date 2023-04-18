@@ -144,7 +144,7 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
   /** Component that shows after a connection has been established */
   const [guestHost, setGuestHost] = useState(null);
   server.on('data', (data) => setGuestHost(() => data.toString()));
-  const [progressCount, setProgressCount] = useState("0px");
+  const [progressCount, setProgressCount] = useState("0%");
 
   const handleSend = async () => {
     let filename = await handleFileDialog();
@@ -169,15 +169,16 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
 
     // send the file to the client
     
-    file.on('data', (data) => { 
+    file.on('data', async (data) => { 
       socket.write(data);
+      await sleep(300)
       dataSent += (1024 * 1024);
       let calculated = (dataSent / total) * 100;
       percent = calculated <= 100 ? calculated : 100;
       console.log(percent);
       setProgressCount(() => {
-        console.log(`${percent}px`);
-        return `${percent}px`;
+        console.log(`${percent}%`);
+        return `${percent}%`;
       }); // Set progress bar
   })
     handleStatus("sending");
@@ -233,7 +234,7 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
 
               <div className="w-full mt-3 h-3 overflow-hidden rounded-full">
                 <div className="h-3 w-full bg-neutral-400">
-                  <div className="h-3 bg-primary" style={{ width: `${progressCount}px` }}></div>
+                  <div className="h-3 bg-primary" style={{ width: progressCount }}></div>
                 </div>
               </div>
               {userType === "send" && (
