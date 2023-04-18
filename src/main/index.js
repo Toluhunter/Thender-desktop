@@ -1,8 +1,18 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, dialog, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+async function fileDialog(){
+  const {canceled, filePaths} = await dialog.showOpenDialog()
+  if (canceled)
+    return
+  
+  return filePaths[0]
+
+}
+
+// async
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -13,6 +23,8 @@ function createWindow() {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
+      nodeIntegration:true,
+      contextIsolation:false,
       sandbox: false
     }
   })
@@ -49,7 +61,11 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  ipcMain.handle('dialog:open', fileDialog)
+
+
   createWindow()
+
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
