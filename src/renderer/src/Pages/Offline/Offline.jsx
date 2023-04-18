@@ -145,12 +145,16 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
   const [guestHost, setGuestHost] = useState(null);
   server.on('data', (data) => setGuestHost(() => data.toString()));
   const [progressCount, setProgressCount] = useState("0%");
+  const [fileName, setFileName] = useState("");
+  const [fileSize, setFileSize] = useState(0);
+  const [sent, setSent] = useState(0);
 
   const handleSend = async () => {
     let filename = await handleFileDialog();
+    setFileName(() => filename);
     // let filename = "/home/toluhunter/Downloads/test.pdf"
     if (!filename) {
-      console.log("Didnt get filename")
+      console.log("Didn't get filename")
       return
     }
 
@@ -161,6 +165,7 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
     let percent = 0
     let dataSent = 0
     socket.write(total)
+    setFileSize(() => total);
     await sleep(800)
 
     const file = api.createReadStream(filename, {
@@ -173,6 +178,7 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
       socket.write(data);
       await sleep(300)
       dataSent += (1024 * 1024);
+      setSent(() => dataSent);
       let calculated = (dataSent / total) * 100;
       percent = calculated <= 100 ? calculated : 100;
       console.log(percent);
@@ -223,10 +229,10 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
               <div className="flex justify-between">
                 <div className="flex shrink-0 items-center space-x-10">
                   <div className="space-y-2">
-                    <p className="font-bold underline">{"Me"} {"->"} {"You"}</p>
-                    <p className="font-bold">File name: <span className="font-light text-gray-700">{"fileName"}</span></p>
-                    <p className="font-bold">File Size: <span className="font-light text-gray-700">{"fileSize"}</span></p>
-                    <p className="font-bold">Sent: <span className="font-light text-gray-700">{"sent"} Bytes</span></p>
+                    <p className="font-bold underline">{"Me"} {"->"} {"User"}</p>
+                    <p className="font-bold">File name: <span className="font-light text-gray-700">{fileName}</span></p>
+                    <p className="font-bold">File Size: <span className="font-light text-gray-700">{fileSize}</span></p>
+                    <p className="font-bold">Sent: <span className="font-light text-gray-700">{sent} Bytes</span></p>
                   </div>
                 </div>
 
