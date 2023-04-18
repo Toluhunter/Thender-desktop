@@ -146,9 +146,12 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
   server.on('data', (data) => setGuestHost(() => data.toString()))
 
   const handleSend = async () => {
-    let filename = handleFileDialog();
-    if (!filename)
+    let filename = await handleFileDialog();
+    // let filename = "/home/toluhunter/Downloads/test.pdf"
+    if (!filename) {
+      console.log("Didnt get filename")
       return
+    }
 
     console.log(socket)
     socket.write(filename);
