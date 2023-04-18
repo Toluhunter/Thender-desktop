@@ -52,7 +52,7 @@ function OfflineConnect({ handleConnect, handleSocket, server }) {
   );
 }
 
-function OfflineReceive({ handleConnect }) {
+function OfflineReceive({ handleConnect, handleClient }) {
   const ipRef = useRef();
   const [ipError, setIPError] = useState("");
   const [status, setStatus] = useState("normal");
@@ -90,12 +90,18 @@ function OfflineReceive({ handleConnect }) {
     // If no error connect to the socket
     try {
       // Check if user exists if so then connect
-      setTimeout(() => {
+      
         setStatus("normal");
+        console.log(ipRef.current.value.trim())
+        const client = api.createConnection({ address: ipRef.current.value.trim(), port: 3000 });
+        handleClient(client); // Set client for transfer component
+        console.log("Connected")
+
         handleConnect();
-      }, 5000);
+    
     } catch (error) {
       // Catch Error
+      console.log(error)
     }
   }
 
@@ -140,7 +146,7 @@ async function handleFileDialog() {
   let fileName = await api.fileDialog()
   return fileName
 }
-function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userType = "send", server }) {
+function OfflineTransfer({ status, client, socket, handleStatus, handleDisconnect, userType = "send", server }) {
   /** Component that shows after a connection has been established */
   const [guestHost, setGuestHost] = useState(null);
   server.on('data', (data) => setGuestHost(() => data.toString()));
@@ -148,6 +154,40 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
   const [fileName, setFileName] = useState("");
   const [fileSize, setFileSize] = useState(0);
   const [sent, setSent] = useState(0);
+
+  if (userType === "receive") {
+    let filename = "";
+    let total = null;
+    let file = null;
+    let percent = 0;
+    let dataSent = 0;
+
+    client?.on('data', (data) => {
+      if (!filename) {
+          filename = api.path.basename(data.toString());
+          file = api.fs.createWriteStream(filename);
+          handleStatus("sending");
+      }
+      else {
+          if(!total){
+              total = data.toString()
+              total = parseInt(total)
+          }
+          else{
+              dataSent += (data.byteLength);
+              setSent(() => dataSent);
+              let calculated = (dataSent / total) * 100;
+              percent = calculated <= 100 ? calculated : 100;
+              console.log(percent);
+              setProgressCount(() => {
+                console.log(`${percent}%`);
+                return `${percent}%`;
+              }); // Set progress bar
+              file.write(data);
+            }
+      }
+  });
+  }
 
   const handleSend = async () => {
     let filename = await handleFileDialog();
@@ -173,11 +213,10 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
     });
 
     // send the file to the client
-    
     file.on('data', async (data) => { 
       socket.write(data);
       await sleep(300)
-      dataSent += (1024 * 1024);
+      dataSent += (data.byteLength);
       setSent(() => dataSent);
       let calculated = (dataSent / total) * 100;
       percent = calculated <= 100 ? calculated : 100;
@@ -216,12 +255,12 @@ function OfflineTransfer({ status, socket, handleStatus, handleDisconnect, userT
               </form>
             )}
 
-            {(userType === "receive" && status === "normal") && (
+            {/* {(userType === "receive" && status === "normal") && (
               <div className="w-1/2 flex justify-center items-center space-x-4">
                 <Spinner />
                 <span className="text-lg">Awaiting file transfer...</span>
               </div>
-            )}
+            )} */}
           </div>
 
           {(status === "sending") && (
@@ -267,6 +306,11 @@ function Offline() {
   const [status, setStatus] = useState("normal");
   const server = api.createServer();
   const [socket, setSocket] = useState(null);
+  const [client, setClient] = useState(null);
+
+  const handleClient = (client) => {
+    setClient(() => client);
+  }
 
   const handleSocket = (socket) => {
     setSocket(() => socket);
@@ -332,7 +376,7 @@ function Offline() {
               {(connected === false || connected === 'false') ? (
                 <OfflineConnect handleSocket={handleSocket} handleConnect={handleConnect} server={server} />
               ) : (
-                <OfflineTransfer socket={socket} status={status} userType={choice} handleStatus={handleStatus} handleDisconnect={disconnect} server={server} />
+                <OfflineTransfer client={client} socket={socket} status={status} userType={choice} handleStatus={handleStatus} handleDisconnect={disconnect} server={server} />
               )}
             </>
           )}
@@ -341,9 +385,9 @@ function Offline() {
           {choice === "receive" && (
             <>
               {(connected === false || connected === 'false') ? (
-                <OfflineReceive handleConnect={handleConnect} />
+                <OfflineReceive handleConnect={handleConnect} handleClient={handleClient} />
               ) : (
-                <OfflineTransfer socket={socket} status={status} userType={choice} handleStatus={handleStatus} handleDisconnect={disconnect} server={server} />
+                <OfflineTransfer client={client} socket={socket} status={status} userType={choice} handleStatus={handleStatus} handleDisconnect={disconnect} server={server} />
               )}
             </>
           )}

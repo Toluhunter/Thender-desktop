@@ -5,6 +5,7 @@ const ip = require("ip")
 const os = require("os")
 const net = require("net")
 const fs = require("fs")
+const path = require('path')
 
 // Custom APIs for renderer
 const api = {
@@ -13,6 +14,9 @@ const api = {
   fileDialog: () => ipcRenderer.invoke('dialog:open'),
   createServer: () => net.createServer(),
   createReadStream: (path) => fs.createReadStream(path),
+  createConnection: (option) => net.connect(option),
+  fs:fs,
+  path:path,
   statSync: (path) => fs.statSync(path)
 }
 
